@@ -6,7 +6,7 @@ const Loader = () =>{
             justifyContent: "center", 
             alignItems: "center", 
             height: "100vh" ,
-            color :"rgb(125, 28, 74)"
+            color :"#FFD700"
 
         }}>
             <div className="spinner-border " role="status">
@@ -16,4 +16,4 @@ const Loader = () =>{
      
     )
 }
-export default  Loader;
+export default Loader;

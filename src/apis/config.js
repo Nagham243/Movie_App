@@ -1,5 +1,9 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+const apiKey = import.meta.env.VITE_API_KEY;
+export { apiUrl, apiKey };
+
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });

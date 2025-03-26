@@ -23,6 +23,20 @@ body {
   padding: 0;
 }
 
+
+.tv-show-backdrop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tv-show-backdrop i {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
 @keyframes gradientMove {
   0% { background-position: 0% 0%; }
   25% { background-position: 25% 75%; }
