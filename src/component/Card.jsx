@@ -1,51 +1,33 @@
-import { useNavigate } from "react-router";
-export const ProductCard = (props) => {
-  const { productItem, handleDeleteProduct } = props;
-  const navigate = useNavigate();
-  const redirectToDetails = (id) => {
-    navigate(`/product-details/${id}`);
-  };
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 
+export const MovieCard = ({ movie, isInWishlist, toggleWishlist }) => {
   return (
-    <>
-      <div className="card h-100">
-        <img src={productItem.thumbnail} className="card-img-top" alt="..." />
-        <div className="card-body">
-          {productItem.stock < 0 ? (
-            <span className="badge text-bg-danger">Out Of Stock </span>
-          ) : (
-            <span className="badge"
-            style={{
-              color :"rgb(244, 204, 233)",
-              backgroundColor :"rgb(125, 28, 74)",
+    <div className="card position-relative" style={{ width: "100%", height: "100%" }}>
+      {/* Wishlist Heart Icon */}
+      <FontAwesomeIcon
+        icon={faHeart}
+        className="position-absolute top-0 end-0 m-2"
+        size="lg"
+        style={{
+          color: isInWishlist ? "yellow" : "gray",
+          cursor: "pointer",
+        }}
+        onClick={toggleWishlist}
+      />
 
-            }}
-            >In Stock </span>
-          )}
-          <h5 className="card-title">{productItem.title}</h5>
-        </div>
-        <div className="card-footer">
-          <button
-            className="btn  "
-            style={{
-              backgroundColor :"rgb(125, 28, 74)",
-              color:"white"
-            }}
-            onClick={() => redirectToDetails(productItem.id)}
-          >
-            More
-          </button>
-          <button
-            className="btn   mx-2"
-            style={{
-              backgroundColor:"rgb(244, 204, 233)"
-            }}
-            onClick={() => handleDeleteProduct(productItem.id)}
-          >
-            Delete
-          </button>
-        </div>
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        className="card-img-top"
+        alt={movie.title}
+        style={{ height: "500px", objectFit: "cover" }}
+      />
+
+      <div className="card-body text-center" style={{ backgroundColor: "#eee" }}>
+        <h5 className="card-title">{movie.title}</h5>
+        <p className="card-text"><FontAwesomeIcon icon={faStar} color="yellow" /> {movie.vote_average.toFixed(1)}</p>
       </div>
-    </>
+    </div>
   );
 };
