@@ -1,148 +1,97 @@
-import React from "react";
-import { Link } from "react-router";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom"; // Correct import
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Userlanguage from "../../context/language";
+
 export const Header = () => {
   const counter = useSelector((state) => state.counter);
-  const { language, setLanguage } = useContext(Userlanguage);
-  const handleLanguageChange = (e) => {
-    setLanguage(e.target.value);
+  const { setLanguage } = useContext(Userlanguage);
+
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
   };
+
   return (
-    <>
-      <nav
-        className="navbar navbar-dark fixed-top"
-        style={{
-          backgroundColor: "rgb(125, 28, 74)",
-        }}
-      >
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            Movie App
-          </a>
-          <span className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/">
-              Home
-            </Link>
-          </span>
-          <span className="nav-item">
-            <Link
-              className="nav-link active"
-              aria-current="page"
-              to="/movielist"
-            >
-              Movie List
-            </Link>
-          </span>
-          <span className="nav-item">
-            <Link
-              className="nav-link active"
-              aria-current="page"
-              to="/tvshowlist"
-            >
-              TVshow List
-            </Link>
-          </span>
-          <span className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/about">
-              About Us
-            </Link>
-          </span>
-          <Link
-            className="nav-link active"
-            to="/Cart"
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              position: "relative", // Position relative for absolute positioning of the counter
-            }}
-          >
-            <FontAwesomeIcon icon={faShoppingCart} style={{ color: "white" }} />
-            <span
-              style={{
-                color: "white",
-                fontSize: "0.8rem", // Make the number smaller
-                position: "absolute", // Position absolute to move it
-                top: "-10px", // Move it to the upper top
-                right: "-10px", // Adjust position to the right
-                backgroundColor: " rgb(86, 2, 31)", // Add background for better visibility
-                borderRadius: "70%", // Make it circular
-                padding: "2px 5px", // Add padding for better appearance
-              }}
-            >
-              {counter.value}
-            </span>
-          </Link>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#FFD700" }}> 
+      <div className="container">
+        <Link className="navbar-brand fw-bold text-dark" to="/">
+          🎬 Movie App
+        </Link>
 
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasDarkNavbar"
-            aria-controls="offcanvasDarkNavbar"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div
-            className="offcanvas offcanvas-end "
-            tabIndex="-1"
-            id="offcanvasDarkNavbar"
-            aria-labelledby="offcanvasDarkNavbarLabel"
-            style={{ backgroundColor: "rgb(125, 28, 74)" }}
-          >
-            <div className="offcanvas-header">
-              <h5
-                className="offcanvas-title"
-                id="offcanvasDarkNavbarLabel"
-                style={{
-                  color: "white",
-                }}
-              >
-                Movie App
-              </h5>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/movielist">
+                Movie List
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/tvshowlist">
+                TV Shows
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/about">
+                About Us
+              </Link>
+            </li>
+
+            <li className="nav-item dropdown">
               <button
-                type="button"
-                className="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="offcanvas-body">
-              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li className="nav-item dropdown">
-                  <div className="nav-link">
-                    <label
-                      htmlFor="language-select"
-                      style={{ marginRight: "10px", color: "white" }}
-                    >
-                      Language:
-                    </label>
-                    <select
-                      id="language-select"
-                      value={language}
-                      onChange={handleLanguageChange}
-                      className="form-select form-select-sm bg-light   "
-                      style={{
-                        display: "inline-block",
-                        width: "auto",
-                        color: "black",
-                      }}
-                    >
-                      <option value="en">English</option>
-                      <option value="ar">Arabic</option>
-                    </select>
-                  </div>
+                className="btn btn-dark dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                🌍 Language
+              </button>
+              <ul className="dropdown-menu">
+                <li>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("en")}>
+                    English
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("ar")}>
+                    Arabic
+                  </button>
                 </li>
               </ul>
-            </div>
-          </div>
+            </li>
+
+            <li className="nav-item ms-3 position-relative">
+              <Link className="nav-link text-dark" to="/cart">
+              <FontAwesomeIcon icon={faHeart} size="lg" color="yellow" />
+                {counter.value > 0 && (
+                  <span
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  >
+                    {counter.value}
+                  </span>
+                )}
+              </Link>
+            </li>
+          </ul>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
