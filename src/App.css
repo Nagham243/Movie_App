@@ -1,0 +1,10 @@
+#footer {
+  background-color: black;
+  position: absolute;
+  color: white;
+  padding-top: 10px;
+  text-align: center;
+
+  width: 100%;
+  margin-top: 150px !important;
+}
