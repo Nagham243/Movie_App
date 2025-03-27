@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../apis/config";
 import { MovieCard } from "../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimesCircle, faUndo } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWatchList } from "../store/slice/WatchList";
+import {
+  faSearch,
+  faTimesCircle,
+  faUndo,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -10,14 +16,16 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [wishlist, setWishlist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  const watchList = useSelector((state) => state.WatchList.myList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
-    }, 1000); 
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [searchQuery]);
@@ -56,14 +64,6 @@ export default function Home() {
       });
   };
 
-  const toggleWishlist = (movie) => {
-    setWishlist((prevWishlist) =>
-      prevWishlist.some((m) => m.id === movie.id)
-        ? prevWishlist.filter((m) => m.id !== movie.id)
-        : [...prevWishlist, movie]
-    );
-  };
-
   const resetSearch = () => {
     setSearchQuery("");
     setDebouncedQuery("");
@@ -71,7 +71,8 @@ export default function Home() {
   };
 
   if (loading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center text-danger">Error: {error}</div>;
+  if (error)
+    return <div className="text-center text-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
@@ -101,14 +102,18 @@ export default function Home() {
             <div key={movie.id} className="col-md-3 mb-4">
               <MovieCard
                 movie={movie}
-                isInWishlist={wishlist.some((m) => m.id === movie.id)}
-                toggleWishlist={() => toggleWishlist(movie)}
+                isInWishlist={watchList.some((m) => m.id === movie.id)}
+                toggleWishlist={() => dispatch(toggleWatchList(movie))}
               />
             </div>
           ))
         ) : (
           <div className="text-center text-muted">
-            <FontAwesomeIcon icon={faTimesCircle} size="3x" className="mb-2 text-danger" />
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              size="3x"
+              className="mb-2 text-danger"
+            />
             <p className="text-danger fw-bolder">No movies found.</p>
           </div>
         )}
@@ -123,7 +128,10 @@ export default function Home() {
           >
             Previous
           </button>
-          <span className="align-self-center"> Page {page} of {totalPages} </span>
+          <span className="align-self-center">
+            {" "}
+            Page {page} of {totalPages}{" "}
+          </span>
           <button
             className="btn btn-primary mx-2"
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}

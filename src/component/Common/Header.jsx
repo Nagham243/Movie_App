@@ -14,7 +14,10 @@ export const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#FFD700" }}> 
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "#FFD700" }}
+    >
       <div className="container">
         <Link className="navbar-brand fw-bold text-dark" to="/">
           🎬 Movie App
@@ -35,22 +38,34 @@ export const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/">
+              <Link
+                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                to="/"
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/movielist">
-                Movie List
+              <Link
+                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                to="/watchlist"
+              >
+                Watch List
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/tvshowlist">
+              <Link
+                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                to="/tvshowlist"
+              >
                 TV Shows
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/about">
+              <Link
+                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                to="/about"
+              >
                 About Us
               </Link>
             </li>
@@ -65,12 +80,18 @@ export const Header = () => {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("en")}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("en")}
+                  >
                     English
                   </button>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("ar")}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("ar")}
+                  >
                     Arabic
                   </button>
                 </li>
@@ -79,11 +100,9 @@ export const Header = () => {
 
             <li className="nav-item ms-3 position-relative">
               <Link className="nav-link text-dark" to="/cart">
-              <FontAwesomeIcon icon={faHeart} size="lg" color="yellow" />
+                <FontAwesomeIcon icon={faHeart} size="lg" color="yellow" />
                 {counter.value > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  >
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {counter.value}
                   </span>
                 )}

@@ -4,7 +4,7 @@ import Loader from "../component/Common/Loader";
 import { Suspense } from "react";
 
 const Home = lazy(() => import("../pages/Home"));
-const MovieList = lazy(() => import("../pages/Movies/MovieList"));
+const Watchlist = lazy(() => import("../pages/Movies/Watchlist"));
 const MovieDetails = lazy(() => import("../pages/Movies/MovieDetails"));
 const TVShowList = lazy(() => import("../pages/TVShows/TVShowList"));
 const TVShowDetails = lazy(() => import("../pages/TVShows/TVShowDetails"));
@@ -17,7 +17,7 @@ const RoutesList = () => {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movielist" element={<MovieList />} />
+        <Route path="/watchlist" element={<Watchlist />} />
         <Route path="/:id" element={<MovieDetails />} />
         <Route path="/tvshowlist" element={<TVShowList />} />
         <Route path="/tvshowlist/:id" element={<TVShowDetails />} />
