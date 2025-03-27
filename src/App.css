@@ -143,3 +143,44 @@ body{
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(255, 193, 7, 0.2);
 }
+
+.custom-tabs .nav-tabs {
+  border-bottom: 2px solid #2C2C2C;
+}
+
+.custom-tabs .nav-link {
+  color: #FFC107;
+  background-color: transparent;
+  border: none;
+}
+
+.custom-tabs .nav-link.active {
+  color: white;
+  background-color: #1E1E1E;
+  border-bottom: 2px solid #FFC107;
+}
+.bg-dark {
+  background-color: #1E1E1E !important;
+}
+
+.movie-info-container {
+  background-color: #2C2C2C !important;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.movie-poster-container {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.movie-meta strong {
+  display: inline-block;
+  min-width: 100px;
+}
+
+.star-rating .fa-star {
+  transition: color 0.3s ease;
+}
