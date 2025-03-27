@@ -88,7 +88,7 @@ export const Header = () => {
             </li>
 
             <li className="nav-item ms-3 position-relative">
-              <Link className="nav-link text-primary" to="/cart">
+              <Link className="nav-link text-primary" to="/watchlist">
                 <FontAwesomeIcon icon={faHeart} size="lg" />
                 {counter.value > 0 && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

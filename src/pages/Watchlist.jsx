@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MovieCard } from "../component/Card";
+import { MediaCard } from "../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWatchList } from "../store/slice/WatchList";
@@ -45,7 +45,7 @@ export default function watchList() {
         {watchList.length > 0 ? (
           watchList.map((movie) => (
             <div key={movie.id} className="col-md-3 mb-4">
-              <MovieCard
+              <MediaCard
                 movie={movie}
                 isInWishlist={watchList.some((m) => m.id === movie.id)}
                 toggleWishlist={() => {
