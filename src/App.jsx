@@ -8,11 +8,13 @@ import "./App.css";
 import RoutesList from "./routes/RoutesList";
 import Userlanguage from "./context/language";
 import { useState } from "react";
+import { PaginationProvider } from './context/PaginationContext';
+
 function App() {
   const [language, setLanguage] = useState("en");
 
   return (
-    <>
+    <PaginationProvider>
       <BrowserRouter>
         <Userlanguage value={{ language, setLanguage }}>
           <div dir={language === "ar" ? "rtl" : "ltr"}>
@@ -22,7 +24,7 @@ function App() {
           </div>
         </Userlanguage>
       </BrowserRouter>
-    </>
+    </PaginationProvider>
   );
 }
 
