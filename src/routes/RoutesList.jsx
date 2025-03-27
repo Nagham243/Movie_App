@@ -4,7 +4,7 @@ import Loader from "../component/Common/Loader";
 import { Suspense } from "react";
 
 const Home = lazy(() => import("../pages/Home"));
-const Watchlist = lazy(() => import("../pages/Movies/Watchlist"));
+const Watchlist = lazy(() => import("../pages/Watchlist"));
 const MovieDetails = lazy(() => import("../pages/Movies/MovieDetails"));
 const TVShowList = lazy(() => import("../pages/TVShows/TVShowList"));
 const TVShowDetails = lazy(() => import("../pages/TVShows/TVShowDetails"));
