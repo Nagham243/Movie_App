@@ -1,32 +1,62 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faStar, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
-export const MovieCard = ({ movie, isInWishlist, toggleWishlist }) => {
+export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }) => {
+  const title = type === "movie" ? item.title : item.name;
+  const linkPath = `/${type}/${item.id}`; /* link for a movie or tv show details page */
+
   return (
-    <div className="card position-relative" style={{ width: "100%", height: "100%" }}>
-      {/* Wishlist Heart Icon */}
+    <div className="card bg-card position-relative h-100 border border-custom d-flex flex-column">
       <FontAwesomeIcon
         icon={faHeart}
-        className="position-absolute top-0 end-0 m-2"
+        className="position-absolute top-0 end-0 m-2 z-1"
         size="lg"
         style={{
-          color: isInWishlist ? "yellow" : "gray",
+          color: isInWishlist ? "#FFC107" : "#666",
           cursor: "pointer",
+          transition: "color 0.3s ease",
         }}
         onClick={toggleWishlist}
       />
 
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        className="card-img-top"
-        alt={movie.title}
-        style={{ height: "500px", objectFit: "cover" }}
-      />
+      <Link to={linkPath} className="text-decoration-none flex-grow-1">
+        <img 
+          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+          className="card-img-top text-primary"
+          alt={title}
+          style={{ 
+            height: "300px", 
+            objectFit: "contain",
+            // transition: "transform 0.2s ease",
+          }}
+          // onMouseOver={(e) => e.target.style.transform = "scale(1.03)"}
+          // onMouseOut={(e) => e.target.style.transform = "scale(1)"}
+        />
+      </Link>
 
-      <div className="card-body text-center" style={{ backgroundColor: "#eee" }}>
-        <h5 className="card-title">{movie.title}</h5>
-        <p className="card-text"><FontAwesomeIcon icon={faStar} color="yellow" /> {movie.vote_average.toFixed(1)}</p>
+      <div className="card-body text-center d-flex flex-column">
+        <Link to={linkPath} className="text-decoration-none">
+          <h5 className="card-title text-primary mb-2">{title}</h5>
+        </Link>
+      </div>
+
+      <div className="card-footer bg-dark p-2 mt-auto">
+        <div className="d-flex justify-content-between align-items-center">
+          <span className="text-warning">
+            <FontAwesomeIcon icon={faStar} className="me-1" />
+            {item.vote_average?.toFixed(1)}
+          </span>
+          <Link 
+            to={linkPath} 
+            className="btn btn-warning btn-sm"
+            style={{ minWidth: '100px' }}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} className="me-1" />
+            Details
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -4,9 +4,7 @@ const NotFound=()=>{
         <div className="text-center" style={{
             margin : "200px"
         }}>
-            <h4 style={{
-                color :"rgb(86, 2, 31)"
-            }}>404 - Sorry Page Not Found </h4>
+            <h4 className="text-primary">404 - Sorry Page Not Found </h4>
         </div>
     );
 }
