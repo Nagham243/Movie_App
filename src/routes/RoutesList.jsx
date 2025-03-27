@@ -16,11 +16,11 @@ const RoutesList = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<MovieList />} />
         <Route path="/watchlist" element={<Watchlist />} />
-        <Route path="/:id" element={<MovieDetails />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/tvshowlist" element={<TVShowList />} />
-        <Route path="/tvshowlist/:id" element={<TVShowDetails />} />
+        <Route path="/tv/:id" element={<TVShowDetails />} />
         <Route path="/search" element={<Search />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="*" element={<NotFound />} />
