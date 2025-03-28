@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
+import { axiosInstance } from "../../apis/config";
 import Loader from "../../component/Common/Loader"; 
 import { Link } from "react-router";
 
-const apiUrl = import.meta.env.VITE_API_BASE_URL;
-const apiKey = import.meta.env.VITE_API_KEY;
+
 
 const TVShowDetails = () => {
   const { id } = useParams();
   const [tvShow, setTVShow] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/tv/${id}?api_key=${apiKey}`)
+      axiosInstance
+            .get(`/tv/${id}`)
       .then((resp) => {
         setTVShow(resp.data);
       })
