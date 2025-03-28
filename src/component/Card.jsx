@@ -48,6 +48,7 @@ export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }
         <Link to={linkPath} className="text-decoration-none">
           <h5 className="card-title text-primary mb-2">{title}</h5>
         </Link>
+        <p className="card-text movie-overview text-light">{item.overview}</p>
       </div>
       <div className="card-footer bg-dark p-2 mt-auto">
         <div className="d-flex justify-content-between align-items-center">
