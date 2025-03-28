@@ -4,7 +4,7 @@ import { toggleWatchList } from "../../store/slice/WatchList";
 import { axiosInstance } from "../../apis/config";
 import { MediaCard } from "../../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle , faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import { usePagination } from "../../context/PaginationContext";
 import { useLanguage } from "../../context/LanguageContext";
 import ReactPaginate from "react-paginate";
@@ -15,6 +15,7 @@ export default function Home() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const {
     page,
     totalPages,
@@ -65,6 +66,28 @@ export default function Home() {
   useEffect(() => {
     fetchMovies(page);
   }, [page, language]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollButton(true);
+      } else {
+        setShowScrollButton(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const toggleWishlist = (movie) => {
     setWishlist((prevWishlist) =>
@@ -132,6 +155,32 @@ export default function Home() {
           />
         </div>
       )}
+
+        {showScrollButton && (
+                <button 
+                  onClick={scrollToTop}
+                  style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    backgroundColor: '#ffc107',
+                    color: '#000000',
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+                    zIndex: 1000,
+                  }}
+                >
+                  <FontAwesomeIcon icon={faArrowUp} />
+                </button>
+              )}
+
     </div>
   );
 }

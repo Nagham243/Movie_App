@@ -8,6 +8,7 @@ import {
   faTimesCircle,
   faChevronLeft,
   faChevronRight,
+  faArrowUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePagination } from "../../context/PaginationContext";
 import ReactPaginate from "react-paginate";
@@ -20,6 +21,7 @@ export default function TVShows() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const featuredScrollRef = useRef(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const {
     page,
     totalPages,
@@ -78,6 +80,29 @@ export default function TVShows() {
       fetchRegularShows(page);
     }
   }, [debouncedQuery, page, setTotalPages]);
+
+
+  useEffect(() => {
+      const handleScroll = () => {
+        if (window.scrollY > 300) {
+          setShowScrollButton(true);
+        } else {
+          setShowScrollButton(false);
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+  
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
 
   const fetchRegularShows = (page) => {
     setLoading(true);
@@ -229,6 +254,30 @@ export default function TVShows() {
             />
           </div>
         )}
+                {showScrollButton && (
+                        <button 
+                          onClick={scrollToTop}
+                          style={{
+                            position: 'fixed',
+                            bottom: '20px',
+                            right: '20px',
+                            backgroundColor: '#ffc107',
+                            color: '#000000',
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '50%',
+                            border: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+                            zIndex: 1000,
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faArrowUp} />
+                        </button>
+                      )}
       </>
 
       <style jsx>{`

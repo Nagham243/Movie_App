@@ -168,9 +168,9 @@ const TVShowDetails = () => {
             <i className="fas fa-arrow-left me-2"></i> Back to TV Shows List
           </Link>
 
-          <button className="btn btn-primary">
+          {/* <button className="btn btn-primary">
             <i className="far fa-heart me-2"></i> Add to Watchlist
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
