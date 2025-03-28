@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"; // Correct import
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../../context/LanguageContext";
+
+
 
 export const Header = () => {
   const counter = useSelector((state) => state.counter);
@@ -13,10 +15,10 @@ export const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#FFD700" }}> 
+    <nav className="navbar navbar-expand-lg bg-secondary text-primary" > 
       <div className="container">
-        <Link className="navbar-brand fw-bold text-dark" to="/">
-          🎬 Movie App
+        <Link className="navbar-brand fw-bold text-primary" to="/">
+          Movie App
         </Link>
 
         <button
@@ -33,34 +35,26 @@ export const Header = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
+        
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/movielist">
+              <Link className="nav-link text-primary fw-bold btn btn-outline-warning me-4" to="/">
                 Movie List
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/tvshowlist">
+              <Link className="nav-link text-primary fw-bold btn btn-outline-warning me-4" to="/tvshowlist">
                 TV Shows
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link text-dark fw-bold btn btn-outline-warning me-4" to="/about">
-                About Us
-              </Link>
-            </li>
+            
 
             <li className="nav-item dropdown">
               <button
-                className="btn btn-dark dropdown-toggle"
+                className="btn text-primary border-custom   dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                🌍 Language
+                <FontAwesomeIcon icon={faGlobe} className="text-primary"/>
               </button>
               <ul className="dropdown-menu">
                 <li>
@@ -87,8 +81,8 @@ export const Header = () => {
             </li>
 
             <li className="nav-item ms-3 position-relative">
-              <Link className="nav-link text-dark" to="/cart">
-              <FontAwesomeIcon icon={faHeart} size="lg" color="yellow" />
+              <Link className="nav-link text-primary" to="/cart">
+              <FontAwesomeIcon icon={faHeart} size="lg"  />
                 {counter.value > 0 && (
                   <span
                     className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
