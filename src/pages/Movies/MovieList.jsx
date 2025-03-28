@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../apis/config"
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWatchList } from "../../store/slice/WatchList";
+import { axiosInstance } from "../../apis/config";
 import { MediaCard } from "../../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { usePagination } from "../../context/PaginationContext";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 import Search from "../Search";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
-  const { 
-    page, 
-    totalPages, 
-    setTotalPages, 
-    searchQuery, 
+  const {
+    page,
+    totalPages,
+    setTotalPages,
+    searchQuery,
     setSearchQuery,
     debouncedQuery,
     resetSearch,
-    onPageChange 
+    onPageChange,
   } = usePagination();
 
   useEffect(() => {
@@ -65,12 +66,16 @@ export default function Home() {
     );
   };
 
+  const watchList = useSelector((state) => state.WatchList.myList);
+  const dispatch = useDispatch();
+
   if (loading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center text-danger">Error: {error}</div>;
+  if (error)
+    return <div className="text-center text-danger">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <Search 
+      <Search
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         resetSearch={resetSearch}
@@ -82,15 +87,19 @@ export default function Home() {
             <div key={movie.id} className="col-md-3 mb-4">
               <MediaCard
                 item={movie}
-                isInWishlist={wishlist.some((m) => m.id === movie.id)}
-                toggleWishlist={() => toggleWishlist(movie)}
+                isInWishlist={watchList.some((m) => m.id === movie.id)}
+                toggleWishlist={() => dispatch(toggleWatchList(movie))}
                 type="movie"
               />
             </div>
           ))
         ) : (
           <div className="text-center text-muted">
-            <FontAwesomeIcon icon={faTimesCircle} size="3x" className="mb-2 text-danger" />
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              size="3x"
+              className="mb-2 text-danger"
+            />
             <p className="text-danger fw-bolder">No movies found.</p>
           </div>
         )}
@@ -118,3 +127,26 @@ export default function Home() {
     </div>
   );
 }
+
+// <div className="row">
+//   {movies.length > 0 ? (
+//     movies.map((movie) => (
+//       <div key={movie.id} className="col-md-3 mb-4">
+//         <MovieCard
+//           movie={movie}
+//           isInWishlist={watchList.some((m) => m.id === movie.id)}
+//           toggleWishlist={() => dispatch(toggleWatchList(movie))}
+//         />
+//       </div>
+//     ))
+//   ) : (
+//     <div className="text-center text-muted">
+//       <FontAwesomeIcon
+//         icon={faTimesCircle}
+//         size="3x"
+//         className="mb-2 text-danger"
+//       />
+//       <p className="text-danger fw-bolder">No movies found.</p>
+//     </div>
+//   )}
+// </div>;

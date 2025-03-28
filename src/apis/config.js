@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_API_KEY;
-const IMAGE_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
+const IMAGE_BASE_PATH = "https://image.tmdb.org/t/p/w500";
 export { apiUrl, apiKey };
 
 export const axiosInstance = axios.create({
@@ -46,18 +46,18 @@ export const movieService = {
         params: {
           api_key: apiKey,
           page: page,
-          language: 'en-US'
-        }
+          language: "en-US",
+        },
       });
       return {
         ...response.data,
-        results: response.data.results.map(movie => ({
+        results: response.data.results.map((movie) => ({
           ...movie,
-          poster_full_path: `${IMAGE_BASE_PATH}${movie.poster_path}`
-        }))
+          poster_full_path: `${IMAGE_BASE_PATH}${movie.poster_path}`,
+        })),
       };
     } catch (error) {
-      console.error('Error fetching now playing movies:', error);
+      console.error("Error fetching now playing movies:", error);
       throw error;
     }
   },
@@ -66,30 +66,30 @@ export const movieService = {
     try {
       const [details, recommendations, reviews] = await Promise.all([
         axios.get(`${apiUrl}/movie/${movieId}`, {
-          params: { api_key: apiKey, language: 'en-US' }
+          params: { api_key: apiKey, language: "en-US" },
         }),
         axios.get(`${apiUrl}/movie/${movieId}/recommendations`, {
-          params: { api_key: apiKey }
+          params: { api_key: apiKey },
         }),
         axios.get(`${apiUrl}/movie/${movieId}/reviews`, {
-          params: { api_key: apiKey }
-        })
+          params: { api_key: apiKey },
+        }),
       ]);
 
       return {
         details: {
           ...details.data,
-          poster_full_path: `${IMAGE_BASE_PATH}${details.data.poster_path}`
+          poster_full_path: `${IMAGE_BASE_PATH}${details.data.poster_path}`,
         },
-        recommendations: recommendations.data.results.map(movie => ({
+        recommendations: recommendations.data.results.map((movie) => ({
           ...movie,
-          poster_full_path: `${IMAGE_BASE_PATH}${movie.poster_path}`
+          poster_full_path: `${IMAGE_BASE_PATH}${movie.poster_path}`,
         })),
-        reviews: reviews.data.results
+        reviews: reviews.data.results,
       };
     } catch (error) {
-      console.error('Error fetching movie details:', error);
+      console.error("Error fetching movie details:", error);
       throw error;
     }
-  }
+  },
 };

@@ -46,7 +46,7 @@ export default function watchList() {
           watchList.map((movie) => (
             <div key={movie.id} className="col-md-3 mb-4">
               <MediaCard
-                movie={movie}
+                item={movie}
                 isInWishlist={watchList.some((m) => m.id === movie.id)}
                 toggleWishlist={() => {
                   if (watchList.some((m) => m.id === movie.id)) {
