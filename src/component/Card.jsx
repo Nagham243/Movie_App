@@ -1,9 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faStar, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faStar,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }) => {
+export const MediaCard = ({ item, isInWishlist, toggleWishlist, type }) => {
   if (!item) {
     return (
       <div className="card bg-card position-relative h-100 border border-custom d-flex flex-column justify-content-center align-items-center">
@@ -12,11 +16,16 @@ export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }
     );
   }
 
-  const title = type === "movie" 
-    ? (item.title || "Untitled Movie") 
-    : (item.name || "Untitled Show");
-  
-  const linkPath = `/${type}/${item.id || ''}`;
+  // const title = type === "movie" ? item.title || item.name : "Untitled Show";
+
+  const title =
+    type === "movie"
+      ? item.title || "Untitled Movie"
+      : item.name || "Untitled Show";
+
+  const linkPath = `/${type}/${item.id || ""}`;
+
+  // const linkPath = item
 
   return (
     <div className="card bg-card position-relative h-100 border border-custom d-flex flex-column">
@@ -33,9 +42,11 @@ export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }
       />
       <Link to={linkPath} className="text-decoration-none flex-grow-1">
         <img
-          src={item.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-            : '/placeholder-image.jpg'}
+          src={
+            item.poster_path
+              ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+              : "/placeholder-image.jpg"
+          }
           className="card-img-top text-primary"
           alt={title}
           style={{
@@ -54,12 +65,12 @@ export const MediaCard = ({ item, isInWishlist, toggleWishlist, type = "movie" }
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-warning">
             <FontAwesomeIcon icon={faStar} className="me-1" />
-            {item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}
+            {item.vote_average ? item.vote_average.toFixed(1) : "N/A"}
           </span>
           <Link
             to={linkPath}
             className="btn btn-warning btn-sm"
-            style={{ minWidth: '100px' }}
+            style={{ minWidth: "100px" }}
           >
             <FontAwesomeIcon icon={faInfoCircle} className="me-1" />
             Details

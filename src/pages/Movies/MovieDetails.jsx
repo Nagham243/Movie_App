@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
-import { movieService } from '../../apis/config.js';
-import { MediaCard } from '../../component/Card';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCalendar, faFilm, faLanguage,faHeart } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWatchList } from "../../store/slice/WatchList";
+import { useParams } from "react-router-dom";
+import { Container, Row, Col, Card, Tabs, Tab } from "react-bootstrap";
+import { movieService } from "../../apis/config.js";
+import { MediaCard } from "../../component/Card";
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faStar,
+  faCalendar,
+  faFilm,
+  faLanguage,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedReviewId, setExpandedReviewId] = useState(null);
-  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  const watchList = useSelector((state) => state.WatchList.myList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -21,10 +30,8 @@ const MovieDetailsPage = () => {
         const data = await movieService.getMovieDetails(id);
         setMovieDetails(data);
         setLoading(false);
-        const isMovieInWishlist = wishlist.some((m) => m.id === data.details.id);
-        setIsInWishlist(isMovieInWishlist);
       } catch (error) {
-        console.error('Error fetching movie details:', error);
+        console.error("Error fetching movie details:", error);
         setLoading(false);
       }
     };
@@ -32,18 +39,9 @@ const MovieDetailsPage = () => {
     fetchMovieDetails();
   }, [id]);
 
-  const toggleWishlist = (movie) => {
-    setIsInWishlist(!isInWishlist);
-    setWishlist((prevWishlist) =>
-      prevWishlist.some((m) => m.id === movie.id)
-        ? prevWishlist.filter((m) => m.id !== movie.id)
-        : [...prevWishlist, movie]
-    );
-  };
-
   const truncateReview = (text, maxLength = 200) => {
     if (text.length <= maxLength) return text;
-    return text.substr(0, maxLength) + '...';
+    return text.substr(0, maxLength) + "...";
   };
 
   const toggleReviewExpansion = (reviewId) => {
@@ -69,6 +67,7 @@ const MovieDetailsPage = () => {
   }
 
   const { details, recommendations, reviews } = movieDetails;
+  const InWishlist = watchList.some((movie) => movie.id === details.id);
 
   return (
     <Container fluid className="bg-dark-bg text-primary py-4">
@@ -84,22 +83,22 @@ const MovieDetailsPage = () => {
                 src={details.poster_full_path}
                 alt={details.title}
                 className="img-fluid rounded shadow-lg"
-                style={{ 
-                  maxHeight: '500px', 
-                  objectFit: 'cover',
-                  width: '100%'
+                style={{
+                  maxHeight: "500px",
+                  objectFit: "cover",
+                  width: "100%",
                 }}
               />
               <FontAwesomeIcon
-                      icon={faHeart}
-                      className="position-absolute top-0 end-0 m-2 z-1"
-                      size="lg"
-                      style={{
-                        color: isInWishlist ? "#FFC107" : "#666",
-                        cursor: "pointer",
-                        transition: "color 0.3s ease",
-                      }}
-                      onClick={toggleWishlist}
+                icon={faHeart}
+                className="position-absolute top-0 end-0 m-2 z-1"
+                size="lg"
+                style={{
+                  color: InWishlist ? "#FFC107" : "#666",
+                  cursor: "pointer",
+                  transition: "color 0.3s ease",
+                }}
+                onClick={() => dispatch(toggleWatchList(details))}
               />
             </div>
           </Col>
@@ -108,16 +107,20 @@ const MovieDetailsPage = () => {
               <div className="d-flex justify-content-between align-items-start mb-3">
                 <h1 className="text-white mb-0">{details.title}</h1>
               </div>
-              
+
               <div className="d-flex align-items-center mb-3">
                 <div className="star-rating me-3">
                   {[...Array(5)].map((star, index) => {
                     const ratingValue = index + 1;
                     return (
-                      <FontAwesomeIcon 
+                      <FontAwesomeIcon
                         key={index}
-                        icon={faStar} 
-                        color={ratingValue <= Math.round(details.vote_average / 2) ? "#FFC107" : "#e4e5e9"}
+                        icon={faStar}
+                        color={
+                          ratingValue <= Math.round(details.vote_average / 2)
+                            ? "#FFC107"
+                            : "#e4e5e9"
+                        }
                         className="me-1"
                       />
                     );
@@ -125,9 +128,9 @@ const MovieDetailsPage = () => {
                 </div>
                 <span className="text-white">({details.vote_average}/10)</span>
               </div>
-              
+
               <p className="text-secondary mb-4">{details.overview}</p>
-              
+
               <div className="movie-meta d-flex justify-content-between">
                 <div>
                   <div className="mb-2">
@@ -136,7 +139,9 @@ const MovieDetailsPage = () => {
                   </div>
                   <div>
                     <strong className="text-warning me-2">Genres:</strong>
-                    <span className="text-white">{details.genres.map(g => g.name).join(', ')}</span>
+                    <span className="text-white">
+                      {details.genres.map((g) => g.name).join(", ")}
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -146,7 +151,9 @@ const MovieDetailsPage = () => {
                   </div>
                   <div>
                     <strong className="text-warning me-2">Language:</strong>
-                    <span className="text-white">{details.original_language.toUpperCase()}</span>
+                    <span className="text-white">
+                      {details.original_language.toUpperCase()}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -155,21 +162,41 @@ const MovieDetailsPage = () => {
         </Row>
 
         <Tabs defaultActiveKey="details" className="mb-3 custom-tabs">
-          <Tab eventKey="details" title="Details" className="bg-card p-3 rounded">
+          <Tab
+            eventKey="details"
+            title="Details"
+            className="bg-card p-3 rounded"
+          >
             <h3 className="text-secondary mb-3">Additional Information</h3>
             <Row>
               <Col>
-                <p><strong className="text-warning">Runtime:</strong> {details.runtime} minutes</p>
-                <p><strong className="text-warning">Status:</strong> {details.status}</p>
+                <p>
+                  <strong className="text-warning">Runtime:</strong>{" "}
+                  {details.runtime} minutes
+                </p>
+                <p>
+                  <strong className="text-warning">Status:</strong>{" "}
+                  {details.status}
+                </p>
               </Col>
               <Col>
-                <p><strong className="text-warning">Budget:</strong> ${details.budget.toLocaleString()}</p>
-                <p><strong className="text-warning">Revenue:</strong> ${details.revenue.toLocaleString()}</p>
+                <p>
+                  <strong className="text-warning">Budget:</strong> $
+                  {details.budget.toLocaleString()}
+                </p>
+                <p>
+                  <strong className="text-warning">Revenue:</strong> $
+                  {details.revenue.toLocaleString()}
+                </p>
               </Col>
             </Row>
           </Tab>
-          
-          <Tab eventKey="reviews" title="Reviews" className="bg-card p-3 rounded">
+
+          <Tab
+            eventKey="reviews"
+            title="Reviews"
+            className="bg-card p-3 rounded"
+          >
             {reviews.length > 0 ? (
               <div className="row g-3">
                 {reviews.map((review) => (
@@ -180,17 +207,19 @@ const MovieDetailsPage = () => {
                           {review.author}
                         </Card.Title>
                         <Card.Text className="flex-grow-1">
-                          {expandedReviewId === review.id 
-                            ? review.content 
+                          {expandedReviewId === review.id
+                            ? review.content
                             : truncateReview(review.content)}
                         </Card.Text>
                         {review.content.length > 200 && (
                           <div className="mt-2">
-                            <button 
+                            <button
                               className="btn btn-link p-0 text-primary"
                               onClick={() => toggleReviewExpansion(review.id)}
                             >
-                              {expandedReviewId === review.id ? 'See Less' : 'See More'}
+                              {expandedReviewId === review.id
+                                ? "See Less"
+                                : "See More"}
                             </button>
                           </div>
                         )}
@@ -212,8 +241,8 @@ const MovieDetailsPage = () => {
               <Col key={movie.id}>
                 <MediaCard
                   item={movie}
-                  isInWishlist={wishlist.some((m) => m.id === movie.id)}
-                  toggleWishlist={() => toggleWishlist(movie)}
+                  isInWishlist={watchList.some((m) => m.id === movie.id)}
+                  toggleWishlist={() => dispatch(toggleWatchList(movie))}
                   type="movie"
                 />
               </Col>

@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../../context/LanguageContext";
 
-
-
 export const Header = () => {
   const counter = useSelector((state) => state.counter);
   const { language, setLanguage } = useLanguage();
@@ -15,7 +13,7 @@ export const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-secondary text-primary" > 
+    <nav className="navbar navbar-expand-lg bg-secondary text-primary">
       <div className="container">
         <Link className="navbar-brand fw-bold text-primary" to="/">
           Movie App
@@ -35,18 +33,30 @@ export const Header = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-        
             <li className="nav-item">
-              <Link className="nav-link text-primary fw-bold btn btn-outline-warning me-4" to="/">
+              <Link
+                className="nav-link text-primary fw-bold btn btn-outline-warning me-4"
+                to="/"
+              >
                 Movie List
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-primary fw-bold btn btn-outline-warning me-4" to="/tvshowlist">
+              <Link
+                className="nav-link text-primary fw-bold btn btn-outline-warning me-4"
+                to="/tvshowlist"
+              >
                 TV Shows
               </Link>
             </li>
-            
+            <li className="nav-item">
+              <Link
+                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                to="/about"
+              >
+                About Us
+              </Link>
+            </li>
 
             <li className="nav-item dropdown">
               <button
@@ -54,26 +64,42 @@ export const Header = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <FontAwesomeIcon icon={faGlobe} className="text-primary"/>
+                <FontAwesomeIcon icon={faGlobe} className="text-primary" />
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("en")} disabled={language === "en"}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("en")}
+                    disabled={language === "en"}
+                  >
                     English
                   </button>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("ar")} disabled={language === "ar"}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("ar")}
+                    disabled={language === "ar"}
+                  >
                     Arabic
                   </button>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("fr")} disabled={language === "fr"}>
-                  Français
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("fr")}
+                    disabled={language === "fr"}
+                  >
+                    Français
                   </button>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("zh")} disabled={language === "zh"}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => handleLanguageChange("zh")}
+                    disabled={language === "zh"}
+                  >
                     Chinese
                   </button>
                 </li>
@@ -81,12 +107,10 @@ export const Header = () => {
             </li>
 
             <li className="nav-item ms-3 position-relative">
-              <Link className="nav-link text-primary" to="/cart">
-              <FontAwesomeIcon icon={faHeart} size="lg"  />
+              <Link className="nav-link text-primary" to="/watchlist">
+                <FontAwesomeIcon icon={faHeart} size="lg" />
                 {counter.value > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  >
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {counter.value}
                   </span>
                 )}

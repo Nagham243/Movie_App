@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router";
 import Loader from "../component/Common/Loader";
 import { Suspense } from "react";
 
- 
+const Watchlist = lazy(() => import("../pages/Watchlist"));
 const MovieList = lazy(() => import("../pages/Movies/MovieList"));
 const MovieDetails = lazy(() => import("../pages/Movies/MovieDetails"));
 const TVShowList = lazy(() => import("../pages/TVShows/TVShowList"));
@@ -16,8 +16,8 @@ const RoutesList = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-       
         <Route path="/" element={<MovieList />} />
+        <Route path="/watchlist" element={<Watchlist />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/tvshowlist" element={<TVShowList />} />
         <Route path="/tv/:id" element={<TVShowDetails />} />
