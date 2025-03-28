@@ -36,6 +36,13 @@ body {
   color: rgba(255, 255, 255, 0.8);
 }
 
+.movie-overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @keyframes gradientMove {
   0% { background-position: 0% 0%; }

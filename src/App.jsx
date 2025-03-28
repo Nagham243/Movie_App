@@ -6,21 +6,19 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
 import RoutesList from "./routes/RoutesList";
-import Userlanguage from "./context/language";
-import { useState } from "react";
+import { LanguageProvider } from "./context/LanguageContext";
+
 function App() {
-  const [language, setLanguage] = useState("en");
+
 
   return (
     <>
       <BrowserRouter>
-        <Userlanguage value={{ language, setLanguage }}>
-          <div dir={language === "ar" ? "rtl" : "ltr"}>
+        <LanguageProvider>
             <Header />
             <RoutesList />
             <Footer />
-          </div>
-        </Userlanguage>
+          </LanguageProvider>
       </BrowserRouter>
     </>
   );

@@ -3,6 +3,7 @@ import { axiosInstance } from "../apis/config";
 import { MovieCard } from "../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimesCircle, faUndo } from "@fortawesome/free-solid-svg-icons";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -13,6 +14,7 @@ export default function Home() {
   const [wishlist, setWishlist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const { language } = useLanguage();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,7 +46,8 @@ export default function Home() {
   const fetchMovies = (page) => {
     setLoading(true);
     axiosInstance
-      .get("/movie/now_playing", { params: { page } })
+      .get("/movie/now_playing", { params: {  ...(language && { language }),  
+      page, } })
       .then((response) => {
         setMovies(response.data.results);
         setTotalPages(response.data.total_pages);
@@ -55,6 +58,10 @@ export default function Home() {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    fetchMovies(page);
+  }, [page, language]);
 
   const toggleWishlist = (movie) => {
     setWishlist((prevWishlist) =>

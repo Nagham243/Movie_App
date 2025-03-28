@@ -27,6 +27,7 @@ export const MovieCard = ({ movie, isInWishlist, toggleWishlist }) => {
       <div className="card-body text-center" style={{ backgroundColor: "#eee" }}>
         <h5 className="card-title">{movie.title}</h5>
         <p className="card-text"><FontAwesomeIcon icon={faStar} color="yellow" /> {movie.vote_average.toFixed(1)}</p>
+        <p className="card-text movie-overview">{movie.overview}</p>
       </div>
     </div>
   );

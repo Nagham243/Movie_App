@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
 import { Link } from "react-router-dom"; // Correct import
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import Userlanguage from "../../context/language";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const Header = () => {
   const counter = useSelector((state) => state.counter);
-  const { setLanguage } = useContext(Userlanguage);
+  const { language, setLanguage } = useLanguage();
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
@@ -65,13 +64,23 @@ export const Header = () => {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("en")}>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("en")} disabled={language === "en"}>
                     English
                   </button>
                 </li>
                 <li>
-                  <button className="dropdown-item" onClick={() => handleLanguageChange("ar")}>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("ar")} disabled={language === "ar"}>
                     Arabic
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("fr")} disabled={language === "fr"}>
+                  Français
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => handleLanguageChange("zh")} disabled={language === "zh"}>
+                    Chinese
                   </button>
                 </li>
               </ul>
