@@ -44,6 +44,7 @@ export default function watchList() {
       <div className="row">
         {watchList.length > 0 ? (
           watchList.map((movie) => (
+            // conditions to check for whether iths a movie or a tv show
             <div key={movie.id} className="col-md-3 mb-4">
               <MediaCard
                 item={movie}
@@ -59,6 +60,9 @@ export default function watchList() {
                     }
                   }
                 }}
+                type={
+                  movie.last_air_date || movie.first_air_date ? "tv" : "movie"
+                } // used in routing
               />
             </div>
           ))

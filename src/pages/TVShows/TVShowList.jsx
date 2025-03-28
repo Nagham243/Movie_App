@@ -19,7 +19,6 @@ export default function TVShows() {
   const [regularShows, setRegularShows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
   const featuredScrollRef = useRef(null);
   const {
     page,
@@ -108,14 +107,6 @@ export default function TVShows() {
         behavior: "smooth",
       });
     }
-  };
-
-  const toggleWishlist = (show) => {
-    setWishlist((prevWishlist) =>
-      prevWishlist.some((m) => m.id === show.id)
-        ? prevWishlist.filter((m) => m.id !== show.id)
-        : [...prevWishlist, show]
-    );
   };
 
   const watchList = useSelector((state) => state.WatchList.myList);

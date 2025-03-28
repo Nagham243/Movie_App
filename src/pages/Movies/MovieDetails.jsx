@@ -67,7 +67,7 @@ const MovieDetailsPage = () => {
   }
 
   const { details, recommendations, reviews } = movieDetails;
-  const isInWishlist = watchList.some((movie) => movie.id === details.id);
+  const InWishlist = watchList.some((movie) => movie.id === details.id);
 
   return (
     <Container fluid className="bg-dark-bg text-primary py-4">
@@ -94,7 +94,7 @@ const MovieDetailsPage = () => {
                 className="position-absolute top-0 end-0 m-2 z-1"
                 size="lg"
                 style={{
-                  color: isInWishlist ? "#FFC107" : "#666",
+                  color: InWishlist ? "#FFC107" : "#666",
                   cursor: "pointer",
                   transition: "color 0.3s ease",
                 }}
@@ -241,7 +241,7 @@ const MovieDetailsPage = () => {
               <Col key={movie.id}>
                 <MediaCard
                   item={movie}
-                  isInWishlist={() => watchList.some((m) => m.id === movie.id)}
+                  isInWishlist={watchList.some((m) => m.id === movie.id)}
                   toggleWishlist={() => dispatch(toggleWatchList(movie))}
                   type="movie"
                 />
