@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./slice/counter";
-import cartReducer from "./slice/Cart";
+import WatchListReducer from "./slice/WatchList";
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    cart: cartReducer,
+    WatchList: WatchListReducer,
   } /* waiting for reducer from slice */,
 });
