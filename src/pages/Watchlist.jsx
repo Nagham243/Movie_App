@@ -145,7 +145,7 @@ export default function WatchList() {
                 className="mb-3 text-danger"
               />
               {watchList.length > 0 ? (
-                <p className="fw-bold">No matches found. Try adjusting your filters.</p>
+                <p className="fw-bold text-secondary">No matches found. Try adjusting your filters.</p>
               ) : (
                 <div>
                   <p className="text-danger fw-bold fs-4">Your Watchlist Is Empty</p>
@@ -159,7 +159,7 @@ export default function WatchList() {
 
       {filteredWatchList.length > 0 && (
         <div className="mt-3 mb-5 text-center">
-          <p className="text-muted">
+          <p className="text-muted text-secondary">
             Showing {filteredWatchList.length} of {watchList.length} items in your watchlist
           </p>
         </div>
