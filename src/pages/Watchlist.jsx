@@ -8,13 +8,13 @@ import {
   faTimesCircle,
   faUndo,
   faFilm,
-  faTv
+  faTv,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function WatchList() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("all"); 
+  const [filter, setFilter] = useState("all");
   const watchList = useSelector((state) => state.WatchList.myList);
   const dispatch = useDispatch();
 
@@ -30,15 +30,17 @@ export default function WatchList() {
 
   const filteredWatchList = watchList.filter((item) => {
     const isMovie = !(item.last_air_date || item.first_air_date);
-    const typeMatch = 
-      filter === "all" || 
-      (filter === "movies" && isMovie) || 
+    const typeMatch =
+      filter === "all" ||
+      (filter === "movies" && isMovie) ||
       (filter === "tv" && !isMovie);
-    
-    const searchMatch = 
-      searchTerm === "" || 
-      (item.title || item.name).toLowerCase().includes(searchTerm.toLowerCase());
-    
+
+    const searchMatch =
+      searchTerm === "" ||
+      (item.title || item.name)
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
     return typeMatch && searchMatch;
   });
 
@@ -58,7 +60,7 @@ export default function WatchList() {
   return (
     <div className="container mt-4">
       <h2 className="text-center mb-4">My Watchlist</h2>
-      
+
       {/* <div className="d-flex justify-content-center mb-4">
         <div className="input-group w-75">
           <span className="input-group-text bg-dark text-white">
@@ -89,7 +91,9 @@ export default function WatchList() {
             All
           </button>
           <button
-            className={`btn ${filter === "movies" ? "btn-warning" : "btn-dark"}`}
+            className={`btn ${
+              filter === "movies" ? "btn-warning" : "btn-dark"
+            }`}
             onClick={() => setFilter("movies")}
           >
             <FontAwesomeIcon icon={faFilm} className="me-1" /> Movies
@@ -119,18 +123,36 @@ export default function WatchList() {
                     item={item}
                     isInWishlist={true}
                     toggleWishlist={() => {
-                      if (confirm("Are you sure you want to remove this from your watchlist?")) {
+                      if (
+                        confirm(
+                          "Are you sure you want to remove this from your watchlist?"
+                        )
+                      ) {
                         dispatch(toggleWatchList(item));
                       }
                     }}
-                    type={item.last_air_date || item.first_air_date ? "tv" : "movie"}
+                    type={
+                      item.last_air_date || item.first_air_date ? "tv" : "movie"
+                    }
                   />
                   <div className="position-absolute top-0 start-0 m-2">
-                    <span className={`badge ${item.last_air_date || item.first_air_date ? "bg-info" : "bg-warning"}`}>
+                    <span
+                      className={`badge ${
+                        item.last_air_date || item.first_air_date
+                          ? "bg-info"
+                          : "bg-warning"
+                      }`}
+                    >
                       {item.last_air_date || item.first_air_date ? (
-                        <><FontAwesomeIcon icon={faTv} className="me-1" /> TV-Show</>
+                        <>
+                          <FontAwesomeIcon icon={faTv} className="me-1" />{" "}
+                          TV-Show
+                        </>
                       ) : (
-                        <><FontAwesomeIcon icon={faFilm} className="me-1" /> Movie</>
+                        <>
+                          <FontAwesomeIcon icon={faFilm} className="me-1" />{" "}
+                          Movie
+                        </>
                       )}
                     </span>
                   </div>
@@ -145,11 +167,17 @@ export default function WatchList() {
                 className="mb-3 text-danger"
               />
               {watchList.length > 0 ? (
-                <p className="fw-bold text-secondary">No matches found. Try adjusting your filters.</p>
+                <p className="fw-bold text-secondary">
+                  No matches found. Try adjusting your filters.
+                </p>
               ) : (
                 <div>
-                  <p className="text-danger fw-bold fs-4">Your Watchlist Is Empty</p>
-                  <p>Add movies and TV shows to your watchlist to see them here.</p>
+                  <p className="text-danger fw-bold fs-4">
+                    Your Watchlist Is Empty
+                  </p>
+                  <p>
+                    Add movies and TV shows to your watchlist to see them here.
+                  </p>
                 </div>
               )}
             </div>
@@ -160,7 +188,8 @@ export default function WatchList() {
       {filteredWatchList.length > 0 && (
         <div className="mt-3 mb-5 text-center">
           <p className="text-muted text-secondary">
-            Showing {filteredWatchList.length} of {watchList.length} items in your watchlist
+            Showing {filteredWatchList.length} of {watchList.length} items in
+            your watchlist
           </p>
         </div>
       )}
