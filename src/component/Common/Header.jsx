@@ -53,7 +53,7 @@ export const Header = () => {
             </li>
             <li className="nav-item">
               <Link
-                className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
+                className="nav-link text-primary fw-bold btn btn-outline-warning me-4"
                 to="/about-us"
               >
                 About Us

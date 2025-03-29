@@ -62,17 +62,17 @@ export const movieService = {
     }
   },
 
-  getMovieDetails: async (movieId) => {
+  getMovieDetails: async (movieId, language) => {
     try {
       const [details, recommendations, reviews] = await Promise.all([
         axios.get(`${apiUrl}/movie/${movieId}`, {
-          params: { api_key: apiKey, language: "en-US" },
+          params: { api_key: apiKey, language },
         }),
         axios.get(`${apiUrl}/movie/${movieId}/recommendations`, {
-          params: { api_key: apiKey },
+          params: { api_key: apiKey, language },
         }),
         axios.get(`${apiUrl}/movie/${movieId}/reviews`, {
-          params: { api_key: apiKey },
+          params: { api_key: apiKey, language },
         }),
       ]);
 

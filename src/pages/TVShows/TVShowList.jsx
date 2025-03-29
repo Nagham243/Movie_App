@@ -4,6 +4,7 @@ import { toggleWatchList } from "../../store/slice/WatchList";
 import { axiosInstance } from "../../apis/config";
 import { MediaCard } from "../../component/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import {
   faTimesCircle,
   faChevronLeft,
@@ -21,6 +22,7 @@ export default function TVShows() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const featuredScrollRef = useRef(null);
+  const { language } = useLanguage();
   const [showScrollButton, setShowScrollButton] = useState(false);
   const {
     page,
@@ -46,8 +48,8 @@ export default function TVShows() {
     const fetchFeaturedShows = async () => {
       try {
         const response = await axiosInstance.get("/tv/popular", {
-          params: { page: 1 },
-        }); // take data from first page
+          params: { ...(language && { language }), page: 1 },
+        }); 
         setFeaturedShows(response.data.results.slice(0, 30));
       } catch (error) {
         console.error("Error fetching featured shows:", error);
@@ -57,7 +59,7 @@ export default function TVShows() {
     };
 
     fetchFeaturedShows();
-  }, []);
+  }, [language]);
 
   //end of scroll item
   // Fetch regular shows (main list)

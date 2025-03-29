@@ -5,6 +5,9 @@ import { useParams } from "react-router";
 import { axiosInstance } from "../../apis/config";
 import Loader from "../../component/Common/Loader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLanguage } from "../../context/LanguageContext";
+import { Row, Col } from "react-bootstrap";
+import { MediaCard } from "../../component/Card";
 import { Link } from "react-router";
 import {
   faStar,
@@ -17,20 +20,33 @@ import {
 const TVShowDetails = () => {
   const { id } = useParams();
   const [tvShow, setTVShow] = useState(null);
+  const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
 
   const watchList = useSelector((state) => state.WatchList.myList);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axiosInstance
-      .get(`/tv/${id}`)
-      .then((resp) => {
-        setTVShow(resp.data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  }, [id]);
+    const fetchTVShowDetails = async () => {
+      setLoading(true);
+      try {
+        const [tvShowResponse, recommendationsResponse] = await Promise.all([
+          axiosInstance.get(`/tv/${id}`, { params: { language } }),
+          axiosInstance.get(`/tv/${id}/recommendations`, { params: { language } }),
+        ]);
+  
+        setTVShow(tvShowResponse.data);
+        setRecommendations(recommendationsResponse.data.results);
+      } catch (err) {
+        console.error("Error fetching TV show details:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchTVShowDetails();
+  }, [id, language]);
 
   if (loading) return <Loader />;
   const isInWishlist = watchList.some((show) => show.id == tvShow.id);
@@ -173,6 +189,28 @@ const TVShowDetails = () => {
           </button> */}
         </div>
       </div>
+
+            <h2 className="mb-4 mt-3 text-warning">Recommended TV Shows</h2>
+      <Row xs={1} md={4} className="g-4">
+        {recommendations.length > 0 ? (
+          recommendations.slice(0, 4).map((show) => (
+            <Col key={show.id}>
+              <MediaCard
+                item={show}
+                isInWishlist={watchList.some((s) => s.id === show.id)}
+                toggleWishlist={() => dispatch(toggleWatchList(show))}
+                type="tv"
+              />
+            </Col>
+          ))
+        ) : (
+          <Col>
+            <p className="text-secondary">No recommendations available</p>
+          </Col>
+        )}
+      </Row>
+
+
     </div>
   );
 };

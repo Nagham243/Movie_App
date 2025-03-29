@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Tabs, Tab } from "react-bootstrap";
 import { movieService } from "../../apis/config.js";
 import { MediaCard } from "../../component/Card";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +21,7 @@ const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedReviewId, setExpandedReviewId] = useState(null);
+  const { language } = useLanguage();
 
   const watchList = useSelector((state) => state.WatchList.myList);
   const dispatch = useDispatch();
@@ -27,17 +29,17 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const data = await movieService.getMovieDetails(id);
+        const data = await movieService.getMovieDetails(id, language);
         setMovieDetails(data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching movie details:", error);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchMovieDetails();
-  }, [id]);
+  }, [id, language]);
 
   const truncateReview = (text, maxLength = 200) => {
     if (text.length <= maxLength) return text;
