@@ -48,7 +48,7 @@ export default function TVShows() {
         const response = await axiosInstance.get("/tv/popular", {
           params: { page: 1 },
         }); // take data from first page
-        setFeaturedShows(response.data.results.slice(10, 30));
+        setFeaturedShows(response.data.results.slice(0, 30));
       } catch (error) {
         console.error("Error fetching featured shows:", error);
       } finally {
