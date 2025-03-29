@@ -5,7 +5,9 @@ import { faHeart, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../../context/LanguageContext";
 
 export const Header = () => {
-  const watchListCounter = useSelector((state) => state.WatchList.myList.length);
+  const watchListCounter = useSelector(
+    (state) => state.WatchList.myList.length
+  );
   const { language, setLanguage } = useLanguage();
 
   const handleLanguageChange = (lang) => {
@@ -49,14 +51,14 @@ export const Header = () => {
                 TV Shows
               </Link>
             </li>
-            {/* <li className="nav-item">
+            <li className="nav-item">
               <Link
                 className="nav-link text-dark fw-bold btn btn-outline-warning me-4"
-                to="/about"
+                to="/about-us"
               >
                 About Us
               </Link>
-            </li> */}
+            </li>
 
             <li className="nav-item dropdown">
               <button
@@ -110,18 +112,19 @@ export const Header = () => {
               <Link className="nav-link text-primary" to="/watchlist">
                 <FontAwesomeIcon icon={faHeart} size="lg" />
                 {watchListCounter > 0 && (
-                  <span className="position-absolute badge rounded-circle bg-warning text-dark"
-                  style={{
-                    top: '-2px',
-                    right: '-8px',
-                    fontSize: '0.6rem',
-                    padding: '0.2em 0.5em',
-                    minWidth: '20px',
-                    height: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
+                  <span
+                    className="position-absolute badge rounded-circle bg-warning text-dark"
+                    style={{
+                      top: "-2px",
+                      right: "-8px",
+                      fontSize: "0.6rem",
+                      padding: "0.2em 0.5em",
+                      minWidth: "20px",
+                      height: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
                     {watchListCounter}
                   </span>
